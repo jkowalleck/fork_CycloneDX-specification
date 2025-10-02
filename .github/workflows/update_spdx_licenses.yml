@@ -116,3 +116,5 @@ jobs:
           --label "feat: bump SPDX Licenses $SB_VERSION"
           --base "$GITHUB_REF_NAME"
           --head "$SB_BRANCH"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
