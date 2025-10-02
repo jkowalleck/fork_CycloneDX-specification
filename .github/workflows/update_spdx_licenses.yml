@@ -100,11 +100,15 @@ jobs:
       - name: commit and push
         run: |
           set -eux
-          git add -A schema
-          git config user.name "spdx-license-bumber[bot]"
-          git config user.email "spdx-license-bumber@bot.local"
-          if git commit -s m "feat: bump SPDX licenses $SB_VERSION" || echo "was up to date"
-          git push origin "$SB_BRANCH"
+
+          git config user.name 'spdx-license-bumber[bot]'
+          git config user.email 'spdx-license-bumber@bot.local'
+          if git diff --quiet -- 'schema/spdx.*'
+          then
+            git add -A schema
+            git commit -s m "feat: bump SPDX licenses $SB_VERSION"
+            git push origin "$SB_BRANCH"
+          fi
       - name: pullrequest
         if: ${{ steps.branch.outputs.existed == 'false' }}
         run: >
