@@ -100,11 +100,10 @@ jobs:
       - name: commit and push
         run: |
           set -eux
-
-          git config user.name 'spdx-license-bumber[bot]'
-          git config user.email 'spdx-license-bumber@bot.local'
           if git diff --quiet -- 'schema/spdx.*'
           then
+            git config user.name 'spdx-license-bumber[bot]'
+            git config user.email 'spdx-license-bumber@bot.local'
             git add -A schema
             git commit -s m "feat: bump SPDX licenses $SB_VERSION"
             git push origin "$SB_BRANCH"
