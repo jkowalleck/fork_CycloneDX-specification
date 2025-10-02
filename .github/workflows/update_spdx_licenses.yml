@@ -43,7 +43,7 @@ jobs:
       - name: detect changes
         id: diff
         run: |
-          if git diff -- 'schema/spdx.*'
+          if git diff --quiet -- 'schema/spdx.*'
           then
             echo "$GITHUB_REF_NAME is up-to-date"
             echo "changed=false" >> $GITHUB_OUTPUT
@@ -100,7 +100,7 @@ jobs:
       - name: commit and push
         run: |
           set -eux
-          if git diff -- 'schema/spdx.*'
+          if git diff --quiet -- 'schema/spdx.*'
           then
             git config user.name 'spdx-license-bumber[bot]'
             git config user.email 'spdx-license-bumber@bot.local'
