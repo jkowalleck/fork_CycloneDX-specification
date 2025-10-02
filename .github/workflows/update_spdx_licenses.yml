@@ -61,7 +61,7 @@ jobs:
   pullrequest:
     name: Pull-request Changes
     runs-on: ubuntu-latest
-    needs: 'update'
+    needs: [ 'update' ]
     if: ${{ needs.update.outputs.changed == 'true' }}
     permissions:
       contents: write # push commits
