@@ -100,6 +100,7 @@ jobs:
       - name: commit and push
         run: |
           set -eux
+          git status
           if git diff --quiet -- 'schema/spdx.*'
           then
             echo "branch up-to-date"
