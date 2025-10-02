@@ -45,8 +45,10 @@ jobs:
         run: |
           if git diff --quiet -- 'schema/spdx.*'
           then
+            echo "$GITHUB_REF_NAME is up-to-date"
             echo "changed=false" >> $GITHUB_OUTPUT
           else
+            echo "$GITHUB_REF_NAME is not up-to-date"
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
       - name: Artifact changes
