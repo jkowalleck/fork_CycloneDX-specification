@@ -64,7 +64,8 @@ jobs:
     needs: 'update'
     if: ${{ needs.update.outputs.changed == 'true' }}
     permissions:
-      contents: write  # for git-push
+      contents: write # push commits
+      pull-requests: write # create pullrequests
     env:
       SB_VERSION: ${{ needs.update.outputs.version }}
       SB_BRANCH: spdx-schema-bump/${{ github.ref_name }}_${{ needs.update.outputs.version }}
