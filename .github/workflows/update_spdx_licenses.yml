@@ -114,8 +114,8 @@ jobs:
         # if: ${{ steps.branch.outputs.existed == 'false' }}
         run: >
           gh pr create
-          --fill-verbose
           --title "feat: bump SPDX Licenses $SB_VERSION"
+          --body "$SB_VERSION" 
           --base "$GITHUB_REF_NAME"
           --head "$SB_BRANCH"
         env:
