@@ -115,7 +115,7 @@ jobs:
         run: >
           gh pr create
           --fill-verbose
-          --label "feat: bump SPDX Licenses $SB_VERSION"
+          --title "feat: bump SPDX Licenses $SB_VERSION"
           --base "$GITHUB_REF_NAME"
           --head "$SB_BRANCH"
         env:
