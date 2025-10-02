@@ -68,7 +68,7 @@ jobs:
       pull-requests: write # create pullrequests
     env:
       SB_VERSION: ${{ needs.update.outputs.version }}
-      SB_BRANCH: spdx-schema-bump/${{ github.ref_name }}_${{ needs.update.outputs.version }}
+      SB_BRANCH: ${{ github.ref_name }}_update-spdx/${{ needs.update.outputs.version }}
     steps:
       - name: Checkout
         # see https://github.com/actions/checkout
@@ -95,19 +95,19 @@ jobs:
             echo "existed=false" >> $GITHUB_OUTPUT
             git checkout -b "$SB_BRANCH"
           fi
-      - name: configure git author
-        run: |
-          git config user.name "spdx-license-bumber[bot]"
-          git config user.email "spdx-license-bumber[bot]@users.noreply.github.com"
-      - name: commit and push changes
+      - name: commit and push
         run: |
           set -eux
-          if git commit -sam "feat: bump SPDX licenses $SB_VERSION"
-          then
-            git push origin "$SB_BRANCH"
-          else
-            echo "$SB_BRANCH was up-to-date"
-          fi
+          git add -A schema
+          git config user.name "spdx-license-bumber[bot]"
+          git config user.email "spdx-license-bumber@bot.local"
+          if git commit -s m "feat: bump SPDX licenses $SB_VERSION" || echo "was up to date"
+          git push origin "$SB_BRANCH"
       - name: pullrequest
         if: ${{ steps.branch.outputs.existed == 'false' }}
-        run: gh pr create --base "$GITHUB_REF_NAME" --head "$SB_BRANCH" --fill
+        run: >
+          gh pr create
+          --fill-verbose
+          --label "feat: bump SPDX Licenses $SB_VERSION"
+          --base "$GITHUB_REF_NAME"
+          --head "$SB_BRANCH"
