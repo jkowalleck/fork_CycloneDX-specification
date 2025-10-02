@@ -77,12 +77,6 @@ jobs:
         uses: actions/checkout@v5
         with:
           ref: ${{ github.ref_name }}
-      - name: Fetch changes
-        # https://github.com/actions/download-artifact
-        uses: actions/download-artifact@v5
-        with:
-          name: schema-spdx
-          path: schema
       - name: switch branch
         id: branch
         run: |
@@ -97,6 +91,12 @@ jobs:
             echo "existed=false" >> $GITHUB_OUTPUT
             git checkout -b "$SB_BRANCH"
           fi
+      - name: Fetch changes
+        # https://github.com/actions/download-artifact
+        uses: actions/download-artifact@v5
+        with:
+          name: schema-spdx
+          path: schema
       - name: commit and push
         run: |
           set -eux
